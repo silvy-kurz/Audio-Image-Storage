@@ -1,0 +1,8 @@
+README.md
+pyproject.toml
+src/adi/__init__.py
+src/adi/__main__.py
+src/adi.egg-info/PKG-INFO
+src/adi.egg-info/SOURCES.txt
+src/adi.egg-info/dependency_links.txt
+src/adi.egg-info/top_level.txt
