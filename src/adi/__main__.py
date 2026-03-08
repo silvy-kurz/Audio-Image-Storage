@@ -14,9 +14,8 @@ def create_temp_fft_data():
 
 def main():
     fft_data = load_fft("temps/data.pkl")
-    complex_wave_data = list(fft_data)
-    print(complex_wave_data[0])
-    print(len(complex_wave_data))
+    complex_wave_data = [list(fft_data) for _ in range(0, 100)]
+    print(complex_wave_data[0][0])
 
 
 if __name__ == "__main__":
