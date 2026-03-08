@@ -1,0 +1,46 @@
+#include <stdbool.h>
+#include <inttypes.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <math.h>
+
+
+typedef int8_t i8;
+typedef int16_t i16;
+typedef int32_t i32;
+typedef int64_t i64;
+
+typedef uint8_t u8;
+typedef uint16_t u16;
+typedef int32_t i32;
+typedef uint64_t u64;
+
+typedef float f32;
+
+
+i32 get_random_32b_int(i32 low, i32 high) {
+
+    return low + arc4random_uniform(high - low + 1);
+}
+
+u64 get_random_64b_int() {
+    u64 result;
+    arc4random_buf(&result, sizeof(result));
+    return result;
+}
+
+float get_random_unit_interval() {
+  float r = (float)arc4random() / (float)UINT32_MAX;
+
+    // return low + r * (high - low);
+    return r;
+}
+
+float get_random_float(float low, float high) {
+  float r = (float)arc4random() / (float)UINT32_MAX;
+
+    return low + r * (high - low);
+}
+
