@@ -1,3 +1,4 @@
+from pickle import load, dump
 from numpy import fft
 from scipy.io.wavfile import read
 
@@ -12,3 +13,13 @@ def apply_fft(input_data):
 
     transformed_data = fft.fft(input_data)  # Source:
     return transformed_data
+
+
+def write_out_fft(fft_data, pickle_path):
+    with open(pickle_path, "wb") as file:
+        dump(fft_data, file)
+
+
+def load_fft(pickle_path):
+    with open(pickle_path, "rb") as file:
+        return load(file)
