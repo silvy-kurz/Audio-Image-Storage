@@ -1,1 +1,1 @@
-print("Hello Project!")
+INPUT_DIR = "inputs/"
