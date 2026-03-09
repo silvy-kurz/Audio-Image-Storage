@@ -44,17 +44,21 @@ int main() {
   u32 dingus = get_random_u32();
 
   for (int pixel_n = 0; pixel_n < w * h; pixel_n++) {
-    buffer[pixel_n * 4 + 0] = get_random_u32();
-    buffer[pixel_n * 4 + 1] = get_random_u32();
-    buffer[pixel_n * 4 + 2] = get_random_u32();
-    buffer[pixel_n * 4 + 3] = get_random_u32();
+    // buffer[pixel_n * 4 + 0] = get_random_u32();
+    // buffer[pixel_n * 4 + 1] = get_random_u32();
+    // buffer[pixel_n * 4 + 2] = get_random_u32();
+    // buffer[pixel_n * 4 + 3] = get_random_u32();
+    buffer[pixel_n * 4 + 0] = 100;
+    buffer[pixel_n * 4 + 1] = 200;
+    buffer[pixel_n * 4 + 2] = 300;
+    buffer[pixel_n * 4 + 3] = 500;
   }
-  
+
   printf("data generation done!\n");
   write_rgba_uint32_exr("uint32_output.exr", w, h, buffer);
-
-  free(buffer); 
-  
+  //
+  // free(buffer); 
+  read_rgba_uint32_exr("uint32_output.exr", 512, 512);
   return 0;
 }
 
