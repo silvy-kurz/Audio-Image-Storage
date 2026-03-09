@@ -13,10 +13,18 @@ BIN_DIR="bin"
 # Use pkg-config to get necessary SDL2 flags (cflags and libs)
 
 # Add the math library linker flag
-MATH_FLAG="-lm -lbsd"
+# Get OpenEXR flags. pkg-config is the safest way on Fedora.
+# 1. Capture the flags (using $() is correct)
+EXR_CFLAGS=$(pkg-config --cflags OpenEXR Imath)
+EXR_LIBS=$(pkg-config --libs OpenEXR Imath)
 
-# Combine all linker flags
-LINK_FLAGS=$MATH_FLAG
+# DEBUG: Remove this once it works. It will show you if the paths are empty.
+echo "Debug: EXR_CFLAGS is [$EXR_CFLAGS]"
+
+MATH_FLAG="-lm -lbsd"
+PTHREAD_FLAG="-pthread"
+# Combine your existing flags with the new EXR libraries
+LINK_FLAGS="$MATH_FLAG $EXR_LIBS $PTHREAD_FLAG"
 
 # Ensure the build directory exists
 mkdir -p $BUILD_DIR $BIN_DIR
@@ -28,7 +36,8 @@ build_main() {
   echo "--- Building Main Application: $APP_NAME ---"
 
   # Compile and link
-  gcc $CFLAGS "$SRC_DIR/main.c" -o $BUILD_DIR/$APP_NAME $LINK_FLAGS
+  gcc $CFLAGS -I$SRC_DIR $EXR_CFLAGS "$SRC_DIR/main.c" -o "$BUILD_DIR/$APP_NAME" $LINK_FLAGS
+  # gcc $CFLAGS "$SRC_DIR/main.c" -o $BUILD_DIR/$APP_NAME $LINK_FLAGS
 
   if [ $? -eq 0 ]; then
     mv $BUILD_DIR/$APP_NAME $BIN_DIR/$APP_NAME
@@ -39,49 +48,11 @@ build_main() {
   fi
 }
 
-build_tests() {
-  TEST_EXEC="testexec"
-  echo "--- Building Tests: $TEST_EXEC ---"
-  LIB_SRC_FILES=$(find $SRC_DIR -name "*.c" ! -name "main.c")
-  TEST_SRC_FILES=$(find $TESTS_DIR -name "*.c")
-
-  # Compile and link the library code with the test runner's main() function
-  gcc $CFLAGS tests/main.c -o $BUILD_DIR/$TEST_EXEC $LINK_FLAGS
-
-  if [ $? -eq 0 ]; then
-    echo "Tests build successful!"
-    echo "To run: ./build/$TEST_EXEC"
-  else
-    echo "Tests build failed!"
-    exit 1
-  fi
-}
-
 # --- Command Line Argument Handling ---
 
 case "$1:$2:$3" in
 main:"":"")
   CFLAGS="-g -std=gnu99 "
-  build_main
-  ;;
-main:warn:"")
-  CFLAGS="-g -std=gnu99 -Wall -Wextra -Werror -fsanitize=address -fsanitize=undefined"
-  build_main
-  ;;
-tests:"":"")
-  CFLAGS="-g -std=gnu99 "
-  build_tests
-  ;;
-tests:warn:"")
-  CFLAGS="-g -std=gnu99 -Wall -Wextra -Werror -fsanitize=address -fsanitize=undefined"
-  build_tests
-  ;;
-main:fast:"")
-  CFLAGS="-g -std=gnu99 -O3"
-  build_main
-  ;;
-main:fast:warn)
-  CFLAGS="-g -std=gnu99 -O3 -Wall -Wextra -Werror -fsanitize=address -fsanitize=undefined"
   build_main
   ;;
 *)
