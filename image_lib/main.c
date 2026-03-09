@@ -1,5 +1,5 @@
-#include "fft_complex_inputs.c"
 #include "logging.c"
+#include "fft_complex_inputs.c"
 #include "testing_randomisation.c"
 
 
@@ -33,20 +33,28 @@ typedef float f32;
 
 
 int main() {
-  complex test = {get_random_64b_int(), get_random_64b_int()};
+  // complex test = {4294967295, 255};
+   
 
   printf("Hello World!\n");
   int w = 512, h = 512;
+
   u32* buffer = malloc(w * h * 4 * sizeof(u32));
+  // u64* buffer64 = (u64*)buffer; // Treat it as 64-bit pairs
+  u32 dingus = get_random_u32();
 
-  for (int i = 0; i < w * h * 4; i++) {
-      buffer[i] = 4200000000U; // Example: high-value 32-bit int
+  for (int pixel_n = 0; pixel_n < w * h; pixel_n++) {
+    buffer[pixel_n * 4 + 0] = get_random_u32();
+    buffer[pixel_n * 4 + 1] = get_random_u32();
+    buffer[pixel_n * 4 + 2] = get_random_u32();
+    buffer[pixel_n * 4 + 3] = get_random_u32();
   }
-
-  write_rgba_uint32_exr("output_uint32.exr", w, h, buffer);
+  
+  printf("data generation done!\n");
+  write_rgba_uint32_exr("uint32_output.exr", w, h, buffer);
 
   free(buffer); 
-  log_complex(test);
+  
   return 0;
 }
 

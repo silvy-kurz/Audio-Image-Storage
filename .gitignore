@@ -1,3 +1,4 @@
 inputs/*
 temps/*
 src/adi/__pycache__/
+uint32_output.exr

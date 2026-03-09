@@ -55,6 +55,10 @@ main:"":"")
   CFLAGS="-g -std=gnu99 "
   build_main
   ;;
+main:warn:"")
+  CFLAGS="-g -std=c99 -Wall -Wextra -Werror -fsanitize=address -fsanitize=undefined"
+  build_main
+  ;;
 *)
   echo "Invalid Build Arguments! Valid Arguments Are:"
   echo "./build.sh main  (Builds the main application)"
