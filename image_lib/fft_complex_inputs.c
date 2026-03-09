@@ -22,7 +22,7 @@ typedef uint64_t u64;
 
 typedef float f32;
 
-void read_rgba_uint32_exr(const char* filename, int width, int height)
+u32* read_rgba_uint32_exr(const char* filename, int width, int height)
 {
     exr_context_initializer_t ctxtinit = EXR_DEFAULT_CONTEXT_INITIALIZER;
     exr_context_t myfile;
@@ -30,7 +30,6 @@ void read_rgba_uint32_exr(const char* filename, int width, int height)
     exr_result_t rv = exr_start_read(&myfile, filename, &ctxtinit);
     if (rv != EXR_ERR_SUCCESS) {
         printf("read init failed\n");
-        return;
     }
 
     rv = exr_test_file_header(filename, &ctxtinit);
@@ -146,7 +145,7 @@ void read_rgba_uint32_exr(const char* filename, int width, int height)
     //    Reassemble RGBA interleaved pixels
     // ------------------------------------------ */
     //
-    u32* rgba_pixels = malloc(pixel_count * 4 * sizeof(u32));
+    u32 *rgba_pixels = malloc(pixel_count * 4 * sizeof(u32));
 
     for (int i = 0; i < pixel_count; i++)
     {
@@ -158,19 +157,15 @@ void read_rgba_uint32_exr(const char* filename, int width, int height)
 
 
     printf("first pixel:\n");
-    log_u32b(rgba_pixels[0]);
-    log_u32b(rgba_pixels[1]);
-    log_u32b(rgba_pixels[2]);
-    log_u32b(rgba_pixels[3]);
 
 
     /* cleanup */
 
     free(data);
-    free(rgba_pixels);
 
     exr_decoding_destroy(myfile, &decoder);
     exr_finish(&myfile);
+    return rgba_pixels;
 }
 
 

@@ -39,7 +39,7 @@ int main() {
   printf("Hello World!\n");
   int w = 512, h = 512;
 
-  u32* buffer = malloc(w * h * 4 * sizeof(u32));
+  u32* write_buffer = malloc(w * h * 4 * sizeof(u32));
   // u64* buffer64 = (u64*)buffer; // Treat it as 64-bit pairs
   u32 dingus = get_random_u32();
 
@@ -48,17 +48,22 @@ int main() {
     // buffer[pixel_n * 4 + 1] = get_random_u32();
     // buffer[pixel_n * 4 + 2] = get_random_u32();
     // buffer[pixel_n * 4 + 3] = get_random_u32();
-    buffer[pixel_n * 4 + 0] = 100;
-    buffer[pixel_n * 4 + 1] = 200;
-    buffer[pixel_n * 4 + 2] = 300;
-    buffer[pixel_n * 4 + 3] = 500;
+    write_buffer[pixel_n * 4 + 0] = 100;
+    write_buffer[pixel_n * 4 + 1] = 200;
+    write_buffer[pixel_n * 4 + 2] = 300;
+    write_buffer[pixel_n * 4 + 3] = 500;
   }
 
   printf("data generation done!\n");
-  write_rgba_uint32_exr("uint32_output.exr", w, h, buffer);
-  //
-  // free(buffer); 
-  read_rgba_uint32_exr("uint32_output.exr", 512, 512);
+  write_rgba_uint32_exr("uint32_output.exr", w, h, write_buffer);
+  free(write_buffer); 
+
+
+  u32* read_buffer = read_rgba_uint32_exr("uint32_output.exr", 512, 512);
+  log_u32b(read_buffer[0]);
+  log_u32b(read_buffer[1]);
+  log_u32b(read_buffer[2]);
+  log_u32b(read_buffer[3]);
   return 0;
 }
 
