@@ -16,21 +16,34 @@ void log_u16b(u16 number) {
 }
 
 
-void log_complex(complex number) {
-  int byte;
-  printf("Complex Number: \n");
-  printf("Real Part: ");
-  for (byte = 0; byte < 8; byte++) {
-    printf("%02X|", (u8)(number.real >> 8 * byte) & 0xFF);
-    
-  }
-  printf("\n");
 
-  printf("Imaginary Part: ");
-  for (byte = 0; byte < 8; byte++) {
-    printf("%02X|", (u8)(number.imag >> 8 * byte) & 0xFF);
-    
-  }
-  printf("\n");
+
+void log_wav_data(adi_wav_t *wav_data) {
+  printf("Total File Size : ");
+  log_u32b(wav_data->total_file_size);
+
+  printf("Formatting Chunk Size : ");
+  log_u32b(wav_data->format_block_size);
+
+  printf("Audio Format : ");
+  log_u32b(wav_data->audio_format);
+
+  printf("Channel Count : ");
+  log_u32b(wav_data->channel_count);
+
+  printf("Sample Rate : ");
+  log_u32b(wav_data->sample_rate);
+
+  printf("Bytes Per Second : ");
+  log_u32b(wav_data->bytes_per_second);
+
+  printf("Bytes Per Block : ");
+  log_u32b(wav_data->bytes_per_block);
+
+  printf("Bit Depth : ");
+  log_u32b(wav_data->bit_depth);
+
+  printf("Raw Data Size : ");
+  log_u32b(wav_data->data_size);
+
 }
-
