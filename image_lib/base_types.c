@@ -1,3 +1,10 @@
+#include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <math.h>
+#include <inttypes.h> 
 
 
 typedef int8_t i8;

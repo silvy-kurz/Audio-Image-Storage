@@ -43,7 +43,10 @@ adi_success_code_t parse_header_metadata(u8 *header, adi_wav_t *wav_data) {
     printf("Got Format Size ");
     log_u16b(fmt_size);
     return ADI_FILE_FORMAT_WRONG;
+  } else {
+    wav_data->format_block_size = fmt_size;
   }
+   
 
   memcpy(&wav_data->audio_format, header + 20, 2);
 
@@ -94,13 +97,14 @@ adi_success_code_t parse_data_section(FILE *file, u8 *header, adi_wav_t *wav_dat
 }
 
 
-adi_success_code_t read_wav() {
-  FILE *fp = fopen("inputs/dingus.wav", "rb");
+adi_success_code_t read_wav(char *filename, adi_wav_t* data_out) {
+  adi_success_code_t rv; 
+
+  FILE *fp = fopen(filename, "rb");
   if (!fp) {
   printf("file pointer null\n");
   return ADI_FILE_OPEN_FAILED;
   }
-  adi_success_code_t rv; 
 
 
   u8 meta_header[44];
@@ -109,12 +113,9 @@ adi_success_code_t read_wav() {
     abort(); 
   } 
 
-  adi_wav_t wav_data = {0};
-  parse_header_metadata(meta_header, &wav_data);
-  parse_data_section(fp, meta_header, &wav_data);
-  log_wav_data(wav_data);
+  parse_header_metadata(meta_header, data_out);
+  parse_data_section(fp, meta_header, data_out);
   
-  free(meta_header);
   fclose(fp);
     
 

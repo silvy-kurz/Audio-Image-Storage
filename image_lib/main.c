@@ -28,7 +28,11 @@
 
 
 int main() {
-  printf("%d\n", read_wav());
+  adi_wav_t wav_data = {0};
+  printf("%d\n", read_wav("inputs/dingus.wav", &wav_data));
+
+  free(wav_data.sampled_data);
+
 }
 
 
