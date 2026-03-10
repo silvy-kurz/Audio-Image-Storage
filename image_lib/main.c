@@ -31,9 +31,15 @@ int main() {
   adi_wav_t wav_data = {0};
   printf("%d\n", read_wav("inputs/dingus.wav", &wav_data));
   log_wav_data(&wav_data);
-
   free(wav_data.sampled_data);
 
+  printf("%d\n", read_wav("inputs/sin_test_mono.wav", &wav_data));
+  log_wav_data(&wav_data);
+  free(wav_data.sampled_data);
+
+  printf("%d\n", read_wav("inputs/sin_test_stereo.wav", &wav_data));
+  log_wav_data(&wav_data);
+  free(wav_data.sampled_data);
 }
 
 
