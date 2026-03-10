@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <time.h>
+: #include <time.h>
 #include <string.h>
 
 
@@ -198,10 +198,6 @@ void write_rgba_uint32_exr(const char* filename, int width, int height, const u3
   rv = exr_write_header(myfile);
 
   if (rv != EXR_ERR_SUCCESS) abort();
-
-  printf("rgba_pixels[0]\n");
-  log_u32b(rgba_pixels[0]);
-
 
 
 

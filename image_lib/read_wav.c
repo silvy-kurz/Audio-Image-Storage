@@ -40,8 +40,7 @@ adi_success_code_t parse_header_metadata(u8 *header, adi_wav_t *wav_data) {
   memcpy(&fmt_size, header + 16, 4);
   if (fmt_size != 16) {
     printf("Format Size Irregular or Incompatible\n");
-    printf("Got Format Size ");
-    log_u16b(fmt_size);
+    log_u16b("Got Format Size : ", fmt_size);
     return ADI_FILE_FORMAT_WRONG;
   } else {
     wav_data->format_block_size = fmt_size;
@@ -76,7 +75,6 @@ adi_success_code_t parse_data_section(FILE *file, u8 *header, adi_wav_t *wav_dat
   u32 md_data_size;
   memcpy(&md_data_size, header + assumed_data_id_offset + 4, 4);
   wav_data->data_size = md_data_size;
-  log_u32b(wav_data->data_size);
 
 // TODO: ADD CHECKING OF METADATA DATA SIZE AGAINST TOTAL SIZE - DATA POSITION
 //       FOR NOW JUST ASSUMING SIZE IS CORRECT
