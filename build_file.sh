@@ -18,9 +18,6 @@ BIN_DIR="bin"
 EXR_CFLAGS=$(pkg-config --cflags OpenEXR Imath)
 EXR_LIBS=$(pkg-config --libs OpenEXR Imath)
 
-# DEBUG: Remove this once it works. It will show you if the paths are empty.
-echo "Debug: EXR_CFLAGS is [$EXR_CFLAGS]"
-
 MATH_FLAG="-lm -lbsd"
 PTHREAD_FLAG="-pthread"
 # Combine your existing flags with the new EXR libraries
@@ -37,7 +34,6 @@ build_main() {
 
   # Compile and link
   gcc $CFLAGS -I$SRC_DIR $EXR_CFLAGS "$SRC_DIR/main.c" -o "$BUILD_DIR/$APP_NAME" $LINK_FLAGS
-  # gcc $CFLAGS "$SRC_DIR/main.c" -o $BUILD_DIR/$APP_NAME $LINK_FLAGS
 
   if [ $? -eq 0 ]; then
     mv $BUILD_DIR/$APP_NAME $BIN_DIR/$APP_NAME
