@@ -10,43 +10,6 @@
 #include <string.h>
 
 
-typedef int8_t i8;
-typedef int16_t i16;
-typedef int32_t i32;
-typedef int64_t i64;
-
-typedef uint8_t u8;
-typedef uint16_t u16;
-typedef int32_t i32;
-typedef uint32_t u32;
-typedef uint64_t u64;
-
-typedef float f32;
-
-typedef enum {
-  ADI_SUCCESS,
-  ADI_FILE_OPEN_FAILED,
-  ADI_FILE_FORMAT_WRONG,
-  ADI_FILE_CORRUPTED,
-  ADI_UNKNOWN_ERROR
-} adi_success_code_t;
-
-
-typedef struct {
-  u32 total_file_size;
-  u16 format_block_size;
-  u16 audio_format;
-  u16 channel_count;
-  u32 sample_rate;
-  u32 bytes_per_second;
-  u16 bytes_per_block;
-  u16 bit_depth;
-  u32 data_size;
-  u8* sampled_data;
-} adi_wav_t;
-
-
-
 adi_success_code_t load_and_check_header(FILE *file, u8 *header) {
   if (fread(header, 1, 44, file) < 44) {
     printf("File Read Failed\n");
@@ -67,8 +30,6 @@ adi_success_code_t load_and_check_header(FILE *file, u8 *header) {
 
   return ADI_SUCCESS;
 }
-
-
 
 
 adi_success_code_t parse_header_metadata(u8 *header, adi_wav_t *wav_data) {
@@ -131,7 +92,6 @@ adi_success_code_t parse_data_section(FILE *file, u8 *header, adi_wav_t *wav_dat
   
   return ADI_SUCCESS;
 }
-
 
 
 adi_success_code_t read_wav() {
