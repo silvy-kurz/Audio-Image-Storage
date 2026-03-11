@@ -29,14 +29,22 @@ typedef struct afi_samples_s {
   void *sample_buffer;
 } afi_samples_t;
 
+
+
+
+
+
+
+
 void log_spl_st16_t(char *front, afi_spl_st16_t sample) {
   printf("%s", front);
   log_i16("  Left : ", sample.left);
+  printf("%s", front);
   log_i16("  Right : ", sample.right);
 }
 
 
-afi_result_t log_samples(afi_samples_t *samples, int requested_logging_samples) {
+afi_result_t log_samples(afi_samples_t *samples, int amount) {
   printf("Samples Container has %d\n samples\n", samples->sample_count);
   
   switch (samples->type) {
@@ -47,13 +55,14 @@ afi_result_t log_samples(afi_samples_t *samples, int requested_logging_samples) 
     case STEREO_16 : {
       printf("Samples are 16 Bit Stereo\n"); 
       afi_spl_st16_t *sample_buffer = (afi_spl_st16_t *)samples->sample_buffer;
-
-      printf("Printing First 100 Samples: \n\n");
-      for (int i = 0; i < requested_logging_samples; i++) {
-        printf("  Sample %d:\n", i);
-        log_spl_st16_t("  ", sample_buffer[i]);
-        printf(" \n");
-      };
+      if (amount > 0) {
+        printf("Printing First %d Samples: \n\n", amount);
+        for (int i = 0; i < amount; i++) {
+          printf("  Sample %d:\n", i);
+          log_spl_st16_t("  ", sample_buffer[i]);
+          printf(" \n");
+        };
+      }
       return AFI_SUCCESS;
     }
     case MONO_24 : {
