@@ -8,7 +8,7 @@
 #include <time.h>
 #include <string.h>
 
-void write_rgba_uint32_exr(const char *filename, int width, int height, const adi_pixel_u32_t *rgba_pixels)
+void write_rgba_uint32_exr(const char *filename, int width, int height, const afi_pixel_u32_t *rgba_pixels)
 {
   int pixel_count = width * height;
   int channel_count = 4;
@@ -27,7 +27,6 @@ void write_rgba_uint32_exr(const char *filename, int width, int height, const ad
     memcpy(&data[i * 4 + channel_size * 3], &rgba_pixels[i].r, 4);
   }
 
-  printf("data[0] = %d\n", data[0]);
 
   exr_context_initializer_t ctxtinit = EXR_DEFAULT_CONTEXT_INITIALIZER;
   exr_context_t myfile;

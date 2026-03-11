@@ -19,14 +19,15 @@ void log_i16(char *front, i16 number) {
     printf("%s%" PRId16 "\n", front, number);
 }
 
-void log_sample_2c16(char *front, adi_sample_2c16_t sample) {
+
+void log_spl_st16_t(char *front, afi_spl_st16_t sample) {
   printf("%s", front);
   log_i16("  Left : ", sample.left);
   log_i16("  Right : ", sample.right);
 }
 
 
-void log_wav_data(adi_wav_t *wav_data) {
+void log_wav_data(afi_wav_t *wav_data) {
 
   log_u32("Total File Size : ", wav_data->total_file_size);
   log_u16("Formatting Chunk Size : ", wav_data->format_block_size);

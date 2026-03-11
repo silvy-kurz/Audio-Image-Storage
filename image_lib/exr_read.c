@@ -9,7 +9,7 @@
 #include <string.h>
 
 
-adi_pixel_u32_t* read_rgba_uint32_exr(const char* filename, int width, int height)
+afi_pixel_u32_t* read_rgba_uint32_exr(const char* filename, int width, int height)
 {
     exr_context_initializer_t ctxtinit = EXR_DEFAULT_CONTEXT_INITIALIZER;
     exr_context_t myfile;
@@ -132,7 +132,7 @@ adi_pixel_u32_t* read_rgba_uint32_exr(const char* filename, int width, int heigh
     //    Reassemble RGBA interleaved pixels
     // ------------------------------------------ */
     //
-     adi_pixel_u32_t* rgba_pixels = malloc(pixel_count * sizeof(adi_pixel_u32_t));
+     afi_pixel_u32_t* rgba_pixels = malloc(pixel_count * sizeof(afi_pixel_u32_t));
 
     for (int i = 0; i < pixel_count; i++)
     {
@@ -141,9 +141,6 @@ adi_pixel_u32_t* read_rgba_uint32_exr(const char* filename, int width, int heigh
         memcpy(&rgba_pixels[i].g, &data[channel_size * 2 + i * 4], 4);
         memcpy(&rgba_pixels[i].a, &data[channel_size * 3 + i * 4], 4);
     }
-
-
-    printf("first pixel:\n");
 
 
     /* cleanup */

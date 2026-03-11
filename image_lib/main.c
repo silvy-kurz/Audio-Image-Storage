@@ -34,10 +34,10 @@
 int main_fft() {
   int w = 512, h = 512;
 
-  adi_pixel_u32_t* write_buffer = malloc(w * h * sizeof(adi_pixel_u32_t));
+  afi_pixel_u32_t* write_buffer = malloc(w * h * sizeof(afi_pixel_u32_t));
 
   for (int pixel_n = 0; pixel_n < w * h; pixel_n++) {
-    write_buffer[pixel_n] = (adi_pixel_u32_t){get_random_u32(), get_random_u32(), get_random_u32(), get_random_u32()};
+    write_buffer[pixel_n] = (afi_pixel_u32_t){get_random_u32(), get_random_u32(), get_random_u32(), get_random_u32()};
   }
 
   printf("data generation done!\n");
@@ -45,25 +45,24 @@ int main_fft() {
   free(write_buffer); 
 
 
-  adi_pixel_u32_t* read_buffer = read_rgba_uint32_exr("outputs/uint32_output.exr", 512, 512);
+  afi_pixel_u32_t* read_buffer = read_rgba_uint32_exr("outputs/uint32_output.exr", 512, 512);
 
   free(read_buffer);
   return 0;
 }
 
 int main() {
-  adi_wav_t wav_data = {0};
+  afi_wav_t wav_data = {0};
 
   printf("%d\n", read_wav("inputs/sin_test_stereo.wav", &wav_data));
   log_wav_data(&wav_data);
-  adi_sample_2c16_t *wav_samples = NULL;
-  cast_raw_wav_2c16(&wav_data, &wav_samples);
-  for (int i = 0; i < 100; i++) {
-    printf("Sample %d\n", i);
-    log_sample_2c16("", wav_samples[i]);
-  }
+
+  afi_samples_t *audio_samples = NULL;
+  map_wav_data_samples(&wav_data, &audio_samples);
+
   free(wav_data.sampled_data);
-  free(wav_samples);
+  free(audio_samples->sample_buffer);
+  free(audio_samples);
   main_fft();
 }
 

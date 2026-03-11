@@ -1,33 +1,33 @@
 typedef enum {
-  16B_MONO,  
-  16B_STEREO,  
-  24B_MONO,  
-  24B_STEREO,  
-} adi_sample_type_t
+  MONO_16,  
+  STEREO_16,  
+  MONO_24,  
+  STEREO_24,  
+} afi_sample_type_t;
 
 typedef struct {
     i16 left;
     i16 right;
-} adi_spl_st16_t;
+} afi_spl_st16_t;
 
 typedef struct {
     i16 value;
-} adi_spl_mo16_t;
+} afi_spl_mo16_t;
 
 typedef struct __attribute__((packed)){
     i8 left_bytes[3];
     i8 right_bytes[3];
-} adi_spl_st24_t;
+} afi_spl_st24_t;
 
 typedef struct __attribute__((packed)){
     i8 value_bytes[3];
-} adi_spl_mo24_t;
+} afi_spl_mo24_t;
 
 typedef struct {
-  adi_sample_type_t type;
+  afi_sample_type_t type;
   int sample_count;
   void *sample_buffer;
-} adi_samples_t;
+} afi_samples_t;
 
 
 
@@ -42,5 +42,5 @@ typedef struct {
   u16 bit_depth;
   u32 data_size;
   u8* sampled_data;
-} adi_wav_t;
+} afi_wav_t;
 
