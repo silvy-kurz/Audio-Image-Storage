@@ -45,7 +45,7 @@ void log_spl_st16_t(char *front, afi_spl_st16_t sample) {
 
 
 afi_result_t log_samples(afi_samples_t *samples, int amount) {
-  printf("Samples Container has %d\n samples\n", samples->sample_count);
+  printf("Samples Container has %d Samples\n", samples->sample_count);
   
   switch (samples->type) {
     case MONO_16 : {

@@ -36,6 +36,7 @@ void log_pixel_u32(char *front, afi_pixel_u32_t pixel) {
 
 
 afi_result_t log_pixels(afi_pixels_t *pixels, int amount) {
+  printf("Pixels Container has %d Pixels\n", pixels->pixel_count);
 
   switch (pixels->type) {
     case RGBA_32 : {
