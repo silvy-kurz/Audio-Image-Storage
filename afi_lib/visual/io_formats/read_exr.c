@@ -151,4 +151,3 @@ afi_pixel_u32_t* read_rgba_uint32_exr(const char* filename, int width, int heigh
     exr_finish(&myfile);
     return rgba_pixels;
 }
-

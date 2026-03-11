@@ -29,18 +29,9 @@ typedef struct afi_samples_s {
   void *sample_buffer;
 } afi_samples_t;
 
-
-
-typedef struct afi_wav_s {
-  u32 total_file_size;
-  u16 format_block_size;
-  u16 audio_format;
-  u16 channel_count;
-  u32 sample_rate;
-  u32 bytes_per_second;
-  u16 bytes_per_block;
-  u16 bit_depth;
-  u32 data_size;
-  u8* sampled_data;
-} afi_wav_t;
+void log_spl_st16_t(char *front, afi_spl_st16_t sample) {
+  printf("%s", front);
+  log_i16("  Left : ", sample.left);
+  log_i16("  Right : ", sample.right);
+}
 

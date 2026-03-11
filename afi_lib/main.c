@@ -1,21 +1,29 @@
-// Universally Used Type Conversions and Enums
-#include "base_types.c"
+// Core Universally Used Functionality
+#include "core/base_types.c"
+#include "core/logging.c"
 
 // Usage Specific Struct Definitions
-#include "wav_data.c"
-#include "exr_data.c"
+#include "audio/audio_data.c"
+#include "audio/formats_data.c"
 
-// Logging Debug/Code
-#include "logging.c"
-#include "testing_randomisation.c"
+#include "visual/visual_data.c"
+#include "visual/formats_data.c"
 
-// Functionality Implementing Code
-#include "wav_read.c"
-#include "wav_write.c"
-#include "exr_read.c"
-#include "exr_write.c"
+// Format IO Code
+#include "audio/io_formats/read_wav.c"
+#include "audio/io_formats/write_wav.c"
 
+#include "visual/io_formats/write_exr.c"
+#include "visual/io_formats/read_exr.c"
 
+// Internal Representation Code
+#include "visual/format_to_pixels.c"
+#include "audio/format_to_samples.c"
+#include "conversion/audio_to_visual.c"
+#include "conversion/visual_to_audio.c"
+
+//  Debug Code
+#include "debug/testing_randomisation.c"
 
 
 #include <openexr.h>

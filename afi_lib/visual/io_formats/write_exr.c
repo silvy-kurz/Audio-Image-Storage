@@ -131,3 +131,5 @@ void write_rgba_uint32_exr(const char *filename, int width, int height, const af
     exr_finish(&myfile);
 }
 
+
+

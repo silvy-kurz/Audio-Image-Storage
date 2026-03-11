@@ -2,7 +2,7 @@
 
 # --- Configuration Variables ---
 BUILD_DIR="build"
-SRC_DIR="image_lib"
+SRC_DIR="afi_lib"
 TESTS_DIR="tests"
 BIN_DIR="bin"
 
