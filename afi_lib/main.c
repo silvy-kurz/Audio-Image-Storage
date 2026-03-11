@@ -22,6 +22,10 @@
 #include "conversion/audio_to_visual.c"
 #include "conversion/visual_to_audio.c"
 
+// Final Pipeline Code
+#include "conversion/convert_audio_image_file.c"
+#include "conversion/convert_image_audio_file.c"
+
 //  Debug Code
 #include "debug/testing_randomisation.c"
 
@@ -60,28 +64,17 @@ int filler_image_gen() {
 }
 
 int main() {
-  afi_result_t rv;
+  afi_result_t pipeline_success = wav_to_exr("inputs/sin_test_stereo.wav", "outputs/sin_test_stereo.exr");
+  if (pipeline_success == AFI_SUCCESS) {
+    printf("\n");
+    printf("===================================\n");
+    printf("Audio Successfully Converted to Image\n");
+    return 0;
 
-  afi_wav_t wav_data = {0};
-
-  printf("%d\n", read_wav("inputs/sin_test_stereo.wav", &wav_data));
-  log_wav_data(&wav_data);
-
-  afi_samples_t *audio_samples = NULL;
-  map_wav_data_samples(&wav_data, &audio_samples);
-  log_samples(audio_samples, 10);
-
-  afi_pixels_t *audio_pixels = NULL;
-  rv = map_samples_to_pixels(audio_samples, &audio_pixels);
-  if (rv != AFI_SUCCESS) {
-      printf("Sample to Pixel Mapping Failed!\n");
+  } else {
+    printf("Audio to Image Conversion Failed!\n");
+    return -1;
   }
-  log_pixels(audio_pixels, 100);
-
-
-  free(wav_data.sampled_data);
-  free(audio_samples->sample_buffer);
-  free(audio_samples);
 }
 
 
