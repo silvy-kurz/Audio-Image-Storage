@@ -67,6 +67,7 @@ int main() {
 
   afi_samples_t *audio_samples = NULL;
   map_wav_data_samples(&wav_data, &audio_samples);
+  log_samples(audio_samples, 10);
 
   free(wav_data.sampled_data);
   free(audio_samples->sample_buffer);

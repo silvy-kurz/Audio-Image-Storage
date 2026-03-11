@@ -35,3 +35,34 @@ void log_spl_st16_t(char *front, afi_spl_st16_t sample) {
   log_i16("  Right : ", sample.right);
 }
 
+
+afi_result_t log_samples(afi_samples_t *samples, int requested_logging_samples) {
+  printf("Samples Container has %d\n samples\n", samples->sample_count);
+  
+  switch (samples->type) {
+    case MONO_16 : {
+
+      return AFI_TYPE_NOT_SUPPORTED;
+    } 
+    case STEREO_16 : {
+      printf("Samples are 16 Bit Stereo\n"); 
+      afi_spl_st16_t *sample_buffer = (afi_spl_st16_t *)samples->sample_buffer;
+
+      printf("Printing First 100 Samples: \n\n");
+      for (int i = 0; i < requested_logging_samples; i++) {
+        printf("  Sample %d:\n", i);
+        log_spl_st16_t("  ", sample_buffer[i]);
+        printf(" \n");
+      };
+      return AFI_SUCCESS;
+    }
+    case MONO_24 : {
+
+      return AFI_TYPE_NOT_SUPPORTED;
+    }
+    case STEREO_24 : {
+    
+      return AFI_TYPE_NOT_SUPPORTED;
+    }
+  }
+}

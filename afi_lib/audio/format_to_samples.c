@@ -12,34 +12,32 @@ afi_result_t fill_sample_type(afi_wav_t *wav_data, afi_samples_t *sample_out) {
   switch (wav_data->bit_depth) {
     case 16:
       switch (wav_data->channel_count) {
-        case 1:
+        case 1: {
           sample_out->type = MONO_16;
           return AFI_SUCCESS;
+        }
 
-        case 2:
+        case 2: {
           sample_out->type = STEREO_16;
           return AFI_SUCCESS;
+        }
 
-        default: 
-          return AFI_FILE_FORMAT_WRONG;
+        default: return AFI_FILE_FORMAT_WRONG;
       }
-
     case 24:
       switch (wav_data->channel_count) {
-        case 1:
+        case 1: {
           sample_out->type = MONO_24;
           return AFI_SUCCESS;
+        }
 
-        case 2:
+        case 2: {
           sample_out->type = STEREO_24;
           return AFI_SUCCESS;
-
-        default: 
-          return AFI_FILE_FORMAT_WRONG;
+        }
+        default: return AFI_FILE_FORMAT_WRONG;
       }
-    
-      default: 
-        return AFI_FILE_FORMAT_WRONG;
+      default: return AFI_FILE_FORMAT_WRONG;
   }
 }
 
