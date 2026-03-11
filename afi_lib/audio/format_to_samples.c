@@ -44,16 +44,17 @@ afi_result_t fill_sample_type(afi_wav_t *wav_data, afi_samples_t *sample_out) {
 
 
 afi_result_t map_wav_data_samples(afi_wav_t *wav_data, afi_samples_t **out_samples) {
+  afi_samples_t *samples = malloc(sizeof(afi_samples_t));
+  fill_sample_type(wav_data, samples);
+
   int sample_count = wav_data->data_size / wav_data->bytes_per_block;
   size_t bytes_per_data_sample = wav_data->bytes_per_block;
   u8 *raw_data = wav_data->sampled_data;
 
-  int data_index = 0;
-  int sample_index;
-
-  afi_samples_t *samples = malloc(sizeof(afi_samples_t));
-  fill_sample_type(wav_data, samples);
   samples->sample_count = sample_count;
+
+  int data_index;
+  int sample_index;
 
   switch (samples->type) {
     case MONO_16: {

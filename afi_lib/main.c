@@ -39,7 +39,7 @@
 #define HEIGHT 2000 
 
 
-int main_fft() {
+int filler_image_gen() {
   int w = 512, h = 512;
 
   afi_pixel_u32_t* write_buffer = malloc(w * h * sizeof(afi_pixel_u32_t));
@@ -60,6 +60,8 @@ int main_fft() {
 }
 
 int main() {
+  afi_result_t rv;
+
   afi_wav_t wav_data = {0};
 
   printf("%d\n", read_wav("inputs/sin_test_stereo.wav", &wav_data));
@@ -69,10 +71,17 @@ int main() {
   map_wav_data_samples(&wav_data, &audio_samples);
   log_samples(audio_samples, 10);
 
+  afi_pixels_t *audio_pixels = NULL;
+  rv = map_samples_to_pixels(audio_samples, &audio_pixels);
+  if (rv != AFI_SUCCESS) {
+      printf("Sample to Pixel Mapping Failed!\n");
+  }
+  log_pixels(audio_pixels, 100);
+
+
   free(wav_data.sampled_data);
   free(audio_samples->sample_buffer);
   free(audio_samples);
-  main_fft();
 }
 
 
