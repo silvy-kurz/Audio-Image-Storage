@@ -1,3 +1,7 @@
+typedef struct {
+    int16_t left;
+    int16_t right;
+} adi_sample_2c16_t;
 
 typedef struct {
   u32 total_file_size;

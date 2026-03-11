@@ -40,7 +40,7 @@ adi_success_code_t parse_header_metadata(u8 *header, adi_wav_t *wav_data) {
   memcpy(&fmt_size, header + 16, 4);
   if (fmt_size != 16) {
     printf("Format Size Irregular or Incompatible\n");
-    log_u16b("Got Format Size : ", fmt_size);
+    log_u16("Got Format Size : ", fmt_size);
     return ADI_FILE_FORMAT_WRONG;
   } else {
     wav_data->format_block_size = fmt_size;
@@ -84,7 +84,7 @@ adi_success_code_t parse_data_section(FILE *file, u8 *header, adi_wav_t *wav_dat
 
   wav_data->sampled_data = malloc(wav_data->data_size);
   if (wav_data->sampled_data == NULL) {
-    printf("malloc failed\n");
+    return ADI_MALLOC_FAILED;
   }
   
   printf("%zu bytes loaded\n", fread(wav_data->sampled_data, 1, wav_data->data_size, file));
@@ -119,3 +119,32 @@ adi_success_code_t read_wav(char *filename, adi_wav_t* data_out) {
 
 return ADI_SUCCESS;
 }
+
+
+adi_success_code_t cast_raw_wav_2c16(adi_wav_t* wav_data, adi_sample_2c16_t **out_samples) {
+  int sample_count = wav_data->data_size / wav_data->bytes_per_block;
+  int samples_size = sample_count * sizeof(adi_sample_2c16_t);
+  u8 *raw_data = wav_data->sampled_data;
+
+  adi_sample_2c16_t *samples = malloc(samples_size);
+  if (samples == NULL) {
+    return ADI_MALLOC_FAILED;
+  }
+  log_u32("Allocated Sample Buffer of Size : ", samples_size);
+
+  int bytes_per_sample = wav_data->bytes_per_block;
+  int data_index = 0;
+
+  int sample_index;
+  for (sample_index = 0; sample_index < sample_count; sample_index++) {
+    data_index = sample_index * bytes_per_sample;
+
+    samples[sample_index].left  = (int16_t)(raw_data[data_index]   | (raw_data[data_index + 1] << 8));
+    samples[sample_index].right = (int16_t)(raw_data[data_index + 2] | (raw_data[data_index + 3] << 8));
+  }
+  
+  *out_samples = samples;
+  return ADI_SUCCESS;
+}
+
+

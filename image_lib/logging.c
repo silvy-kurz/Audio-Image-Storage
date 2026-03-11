@@ -7,27 +7,35 @@
 #include <inttypes.h> 
 
 
-void log_u32b(char *front, u32 number) {
+void log_u32(char *front, u32 number) {
     printf("%s%" PRIu32 "\n",front, number);
 }
 
-void log_u16b(char *front, u16 number) {
+void log_u16(char *front, u16 number) {
     printf("%s%" PRIu16 "\n", front, number);
 }
 
+void log_i16(char *front, i16 number) {
+    printf("%s%" PRId16 "\n", front, number);
+}
 
+void log_sample_2c16(char *front, adi_sample_2c16_t sample) {
+  printf("%s", front);
+  log_i16("  Left : ", sample.left);
+  log_i16("  Right : ", sample.right);
+}
 
 
 void log_wav_data(adi_wav_t *wav_data) {
 
-  log_u32b("Total File Size : ", wav_data->total_file_size);
-  log_u16b("Formatting Chunk Size : ", wav_data->format_block_size);
-  log_u16b("Audio Format : ", wav_data->audio_format);
-  log_u16b("Channel Count : ", wav_data->channel_count);
-  log_u32b("Sample Rate : ", wav_data->sample_rate);
-  log_u32b("Bytes Per Second : ", wav_data->bytes_per_second);
-  log_u16b("Bytes Per Block : ", wav_data->bytes_per_block);
-  log_u16b("Bit Depth : ", wav_data->bit_depth);
-  log_u32b("Raw Data Size : ", wav_data->data_size);
+  log_u32("Total File Size : ", wav_data->total_file_size);
+  log_u16("Formatting Chunk Size : ", wav_data->format_block_size);
+  log_u16("Audio Format : ", wav_data->audio_format);
+  log_u16("Channel Count : ", wav_data->channel_count);
+  log_u32("Sample Rate : ", wav_data->sample_rate);
+  log_u32("Bytes Per Second : ", wav_data->bytes_per_second);
+  log_u16("Bytes Per Block : ", wav_data->bytes_per_block);
+  log_u16("Bit Depth : ", wav_data->bit_depth);
+  log_u32("Raw Data Size : ", wav_data->data_size);
   
 }

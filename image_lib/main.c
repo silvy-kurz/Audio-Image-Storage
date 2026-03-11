@@ -29,17 +29,17 @@
 
 int main() {
   adi_wav_t wav_data = {0};
-  printf("%d\n", read_wav("inputs/dingus.wav", &wav_data));
-  log_wav_data(&wav_data);
-  free(wav_data.sampled_data);
-
-  printf("%d\n", read_wav("inputs/sin_test_mono.wav", &wav_data));
-  log_wav_data(&wav_data);
-  free(wav_data.sampled_data);
 
   printf("%d\n", read_wav("inputs/sin_test_stereo.wav", &wav_data));
   log_wav_data(&wav_data);
+  adi_sample_2c16_t *wav_samples = NULL;
+  cast_raw_wav_2c16(&wav_data, &wav_samples);
+  for (int i = 0; i < 100; i++) {
+    printf("Sample %d\n", i);
+    log_sample_2c16("", wav_samples[i]);
+  }
   free(wav_data.sampled_data);
+  free(wav_samples);
 }
 
 
