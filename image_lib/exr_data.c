@@ -1,6 +1,6 @@
 
 
-typedef struct {
+typedef struct afi_pixel_u32_s{
   u32 r;
   u32 g;
   u32 b;
