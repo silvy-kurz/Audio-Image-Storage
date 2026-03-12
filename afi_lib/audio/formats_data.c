@@ -61,29 +61,42 @@ void log_chunk_type(char *front, afi_riff_chunk_t *chunk) {
     }
   }
 }
-void log_chunks(afi_chunk_container_t *chunks) {
+void log_chunks(char *front, afi_chunk_container_t *chunks) {
   int chunk_count = chunks->count;
   int chunk_index;
-      
+  
+  printf("%s", front);
   log_u32("Total Chunk Count : ", chunk_count);
   for (chunk_index = 0; chunk_index < chunk_count; chunk_index++) {
-    printf("Chunk %d\n", chunk_index);
+    printf("%sChunk %d\n", front, chunk_index);
+    printf("%s", front);
     log_chunk_type("  Chunk Type : ", &chunks->data[chunk_index]);
+    printf("%s", front);
     log_u32("  Chunk Size : ", chunks->data[chunk_index].size);
-    printf("  Chunk Data Stored at %p\n", chunks->data[chunk_index].data); 
+    printf("%s  Chunk Data Stored at %p\n",front, chunks->data[chunk_index].data); 
     printf("\n");
   }
 }
 
-void log_wav_data(afi_wav_t *wav_data) {
-  printf("Loaded WAV File:");
+void log_wav_data(char *front, afi_wav_t *wav_data) {
+  printf("%sLoaded WAV File:", front);
+
+  printf("%s", front);
   log_u16(" Audio Format : ", wav_data->audio_format);
+  printf("%s", front);
   log_u16(" Channel Count : ", wav_data->channel_count);
+  printf("%s", front);
   log_u32(" Sample Rate : ", wav_data->sample_rate);
+  printf("%s", front);
   log_u32(" Bytes Per Frame : ", wav_data->bytes_per_frame);
+  printf("%s", front);
   log_u16(" Bit Depth : ", wav_data->bit_depth);
+  printf("%s", front);
   log_u32(" Raw Data Size : ", wav_data->raw_data_size);
-  printf(" Sample Data Stored at %p\n",wav_data->raw_data); 
-  printf(" Wav Chunks:\n");
-  log_chunks(wav_data->chunks);
+
+  printf("%s Sample Data Stored at %p\n",front,wav_data->raw_data); 
+  printf("%s Wav Chunks:\n",front);
+
+  printf("%s", front);
+  log_chunks(" ", wav_data->chunks);
 }

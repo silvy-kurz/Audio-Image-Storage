@@ -35,20 +35,21 @@ void log_pixel_u32(char *front, afi_pixel_u32_t pixel) {
 
 
 
-afi_result_t log_pixels(afi_pixels_t *pixels, int amount) {
-  printf("Pixels Container has %d Pixels\n", pixels->pixel_count);
+afi_result_t log_pixels(char * front, afi_pixels_t *pixels, int amount) {
+  printf("%sPixels Container has %d Pixels\n",front, pixels->pixel_count);
 
   switch (pixels->type) {
     case RGBA_32 : {
-      printf("Pixels are 32 Bit RGBA\n"); 
+      printf("%sPixels are 32 Bit RGBA\n", front); 
       afi_pixel_u32_t *pixel_buffer = (afi_pixel_u32_t *)pixels->pixel_buffer;
       
       if (amount > 0) {
-        printf("Printing First %d Pixels: \n\n", amount);
+        printf("%sPrinting First %d Pixels: \n\n", front, amount);
         for (int i = 0; i < amount; i++) {
-          printf("  Pixel %d:\n", i);
+          printf("%s  Pixel %d:\n",front, i);
+          printf("%s\n", front);
           log_pixel_u32("  ", pixel_buffer[i]);
-          printf(" \n");
+          printf("\n");
         };
       }
 

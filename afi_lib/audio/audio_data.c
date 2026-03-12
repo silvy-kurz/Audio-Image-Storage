@@ -63,8 +63,8 @@ void log_frm_st24_t(char *front, afi_frm_st16_t frame) {
 }
 
 
-afi_result_t log_frames(afi_frames_t *frames, int amount) {
-  printf("Frames Container has %d Frames\n", frames->frame_count);
+afi_result_t log_frames(char *front, afi_frames_t *frames, int amount) {
+  printf("%sFrames Container has %d Frames\n", front, frames->frame_count);
    
   switch (frames->type) {
     case MONO_16 : {
@@ -72,12 +72,13 @@ afi_result_t log_frames(afi_frames_t *frames, int amount) {
       return AFI_TYPE_NOT_SUPPORTED;
     } 
     case STEREO_16 : {
-      printf("frames are 16 Bit Stereo\n"); 
+      printf("%sframes are 16 Bit Stereo\n", front); 
       afi_frm_st16_t *frame_buffer = (afi_frm_st16_t *)frames->frame_buffer;
       if (amount > 0) {
-        printf("Printing First %d Frames: \n\n", amount);
+        printf("%sPrinting First %d Frames: \n\n",front, amount);
         for (int i = 0; i < amount; i++) {
-          printf("  Frame %d:\n", i);
+          printf("%s  Frame %d:\n",front, i);
+          printf("%s\n", front);
           log_frm_st16_t("  ", frame_buffer[i]);
           printf(" \n");
         };
