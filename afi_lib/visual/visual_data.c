@@ -62,5 +62,6 @@ afi_result_t log_pixels(afi_pixels_t *pixels, int amount) {
 
       return AFI_TYPE_NOT_SUPPORTED;
     }
+    default : return AFI_TYPE_NOT_SUPPORTED;
   }
 }
