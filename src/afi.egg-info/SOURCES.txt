@@ -1,0 +1,9 @@
+README.md
+pyproject.toml
+src/afi/__init__.py
+src/afi/__main__.py
+src/afi.egg-info/PKG-INFO
+src/afi.egg-info/SOURCES.txt
+src/afi.egg-info/dependency_links.txt
+src/afi.egg-info/top_level.txt
+tests/test_sin_wav.py

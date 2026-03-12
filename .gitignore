@@ -1,6 +1,6 @@
 inputs/*
 temps/*
-src/adi/__pycache__/
+src/afi/__pycache__/
 outputs/*
 bin/
 build/
