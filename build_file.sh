@@ -48,21 +48,17 @@ build_main() {
 
 case "$1:$2:$3" in
 main:"":"")
-  CFLAGS="-g -std=gnu99 "
+  CFLAGS="-g -std=c99 -Wall -Wextra -Werror -fsanitize=address -fsanitize=undefined"
   build_main
   ;;
-main:warn:"")
-  CFLAGS="-g -std=c99 -Wall -Wextra -Werror -fsanitize=address -fsanitize=undefined"
+main:nowarn:"")
+  CFLAGS="-g -std=gnu99 "
   build_main
   ;;
 *)
   echo "Invalid Build Arguments! Valid Arguments Are:"
-  echo "./build.sh main  (Builds the main application)"
-  echo "./build.sh tests (Builds the testing application)"
-  echo "./build.sh main warn  (Builds the main application with stricter warnings)"
-  echo "./build.sh tests warn (Builds the testing application stricter warnings)"
-  echo "./build.sh main fast(Builds the main application with high optimisation)"
-  echo "./build.sh main fast warn  (Builds the main application with stricter warnings and high optimisation)"
+  echo "./build.sh main  (Builds the main application with strict warnings)"
+  echo "./build.sh main nowarn  (Builds the main application with looser warnings)"
   exit 1
   ;;
 esac

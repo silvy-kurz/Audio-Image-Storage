@@ -197,76 +197,21 @@ afi_result_t load_file_chunks(FILE *file, int chunk_count, afi_chunk_container_t
   return AFI_SUCCESS;
 }
 
-afi_result_t get_audio_format(u8 format, afi_audio_format_t *format_out) {
-  switch (format) {
-    case 1 : {
-      *format_out = AFI_PCM_INTEGER; 
-      return AFI_SUCCESS;
-    }
-    case 3 : {
-      printf("IEE 754 Float Audio Not Yet Implemented\n");
-      return AFI_TYPE_NOT_SUPPORTED;
-    }
-    default : return AFI_FILE_FORMAT_WRONG;
-  }
-}
-
 afi_result_t parse_chunks(afi_chunk_container_t *chunks, afi_wav_t *wav_data) {
-  afi_riff_chunk_t *chunk_buffer = chunks->data;
   int chunk_index;
-  int data_chunks_parsed = 0;
-  int format_chunks_parsed = 0;
-  
-  for (chunk_index = 0; chunk_index < chunks->count; chunk_index++) {
-    switch (chunk_buffer[chunk_index].type) {
-      case AFI_FORMAT : {
-        if (chunk_buffer[chunk_index].size != 16) {
-          printf("Non standard Format Size not Implemented\n");
-          return AFI_TYPE_NOT_SUPPORTED;
-        }
 
-        u8 *format_data = chunk_buffer[chunk_index].data;
+  for (chunk_index = 0; chunk_index < chunks->count) {
+    chunks->data 
 
-        u16 audio_format;
-        memcpy(&audio_format, format_data, 2);
-        get_audio_format(audio_format, &wav_data->audio_format);
-         
-        memcpy(&wav_data->channel_count, format_data + 2, 2);
-        memcpy(&wav_data->sample_rate, format_data + 4, 4);
-        memcpy(&wav_data->bytes_per_frame, format_data + 12, 2);
-        memcpy(&wav_data->bit_depth, format_data + 14, 2);
-        
-        format_chunks_parsed += 1;
-        break;
-      }
-      case AFI_DATA : {
-        memcpy(&wav_data->raw_data_size, &chunk_buffer[chunk_index].size, 4);
-        wav_data->raw_data = chunk_buffer[chunk_index].data;
-        
-        data_chunks_parsed += 1;
-        break;
-      }
-      default : break;
-    }
   }
-  
-  if (data_chunks_parsed < 1) {
-    return AFI_FILE_FORMAT_WRONG;
-  } 
-  if (data_chunks_parsed > 1) {
-    return AFI_TYPE_NOT_SUPPORTED;
-  } 
-  if (data_chunks_parsed != 1) {
-    return AFI_FILE_FORMAT_WRONG;
-  } 
-  
-  wav_data->chunks = chunks; 
 
-  return AFI_SUCCESS;
+  
+  
+
 }
 
 afi_result_t read_wav(char *filename, afi_wav_t** data_out) {
-  afi_wav_t *data = malloc(sizeof(afi_wav_t));
+  afi_wav_t* data = malloc(sizeof(afi_wav_t));
 
   FILE *fp = fopen(filename, "rb");
   if (!fp) {
@@ -288,10 +233,9 @@ afi_result_t read_wav(char *filename, afi_wav_t** data_out) {
   
   afi_chunk_container_t *wav_chunks = NULL;
   load_file_chunks(fp, chunk_count, &wav_chunks);
-  fclose(fp);
+  log_chunks(wav_chunks);
 
-  parse_chunks(wav_chunks, data);
-  log_wav_data(data);
+  fclose(fp);
 
   *data_out = data;
   return AFI_SUCCESS;
