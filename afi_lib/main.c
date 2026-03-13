@@ -1,24 +1,30 @@
-// Core Universally Used Functionality
+// Core Functionality
 #include "core/base_types.c"
 #include "core/logging.c"
 
-// Usage Specific Struct Definitions
+// Usage Specific Definitions
 #include "audio/audio_data.c"
 #include "audio/formats_data.c"
 
 #include "visual/visual_data.c"
 #include "visual/formats_data.c"
 
-// Format IO Code
+#include "conversion/conversion_data.c"
+
+// File Format Code
 #include "audio/io_formats/read_wav.c"
 #include "audio/io_formats/write_wav.c"
 
 #include "visual/io_formats/write_exr.c"
 #include "visual/io_formats/read_exr.c"
 
-// Internal Representation Code
+// File Format to Universal Data Code
 #include "visual/format_to_pixels.c"
-#include "audio/format_to_samples.c"
+#include "visual/pixels_to_format.c"
+#include "audio/format_to_frames.c"
+#include "audio/frames_to_format.c"
+
+// Universal Data Medium Conversion Code
 #include "conversion/audio_to_visual.c"
 #include "conversion/visual_to_audio.c"
 
