@@ -2,14 +2,14 @@
 #include "core/base_types.c"
 #include "core/logging.c"
 
-// Usage Specific Definitions
-#include "audio/audio_data.c"
-#include "audio/formats_data.c"
+// Usage Specific Core Functionality 
+#include "audio/audio_core.c"
+#include "audio/formats_core.c"
 
-#include "visual/visual_data.c"
-#include "visual/formats_data.c"
+#include "visual/visual_core.c"
+#include "visual/formats_core.c"
 
-#include "conversion/conversion_data.c"
+#include "conversion/conversion_core.c"
 
 // File Format Code
 #include "audio/io_formats/read_wav.c"

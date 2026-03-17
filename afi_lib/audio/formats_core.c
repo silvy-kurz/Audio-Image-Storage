@@ -100,3 +100,20 @@ void log_wav_data(char *front, afi_wav_t *wav_data) {
   printf("%s", front);
   log_chunks(" ", wav_data->chunks);
 }
+
+
+// MEMORY MANAGEMENT
+
+
+void destroy_wav_data(afi_wav_t *wav_data) {
+  afi_chunk_container_t *header_chunks = wav_data->chunks;
+  for (int chunk_index = 0; chunk_index < header_chunks->count; chunk_index++) {
+    free(header_chunks->data[chunk_index].data);
+  }
+  free(header_chunks->data);
+  free(header_chunks);
+  free(wav_data);
+}
+
+
+

@@ -25,9 +25,12 @@ afi_result_t wav_to_exr(char *wav_file_name, char *exr_name) {
  //TODO: Implement Function to Determine Image Size from Pixel Count, Current just Works for Current Frame Count 
   int w = 147, h = 150;
   write_rgba_uint32_exr(exr_name, w, h, audio_pixels->pixel_buffer);
-  free(wav_data->raw_data);
+
+  destroy_wav_data(wav_data);
   free(audio_frames->frame_buffer);
   free(audio_frames);
+  free(audio_pixels->pixel_buffer);
+  free(audio_pixels);
   return AFI_SUCCESS;
 }
 

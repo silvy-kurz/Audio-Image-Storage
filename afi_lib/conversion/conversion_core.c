@@ -18,7 +18,7 @@ typedef struct afi_audio_images_s{
   afi_ver_afvf_t version;
   afi_file_encoded_t file_format;
 
-  afi_sections_s *file_non_data_sections;  
+  afi_sections_t *file_non_data_sections;  
   u32 frames_original_section_index;
 
   afi_frames_t *file_data; 
