@@ -8,19 +8,20 @@ typedef enum afi_file_encoded_e {
   AFI_FILE_RIFF
 } afi_file_encoded_t;
 
+typedef struct afi_sections_s {
+  u32 section_count;
+  u32 *section_offsets;
+  u8 *metadata;
+} afi_sections_t;
 
 typedef struct afi_audio_images_s{
   afi_ver_afvf_t version;
   afi_file_encoded_t file_format;
 
+  afi_sections_s *file_non_data_sections;  
   u32 frames_original_section_index;
-  u32 section_count;
-  u32 *section_offsets;
-  u8 *metadata;
 
-  u32 frame_count;
-  afi_frame_type_t frames_type;
-  u8 *frames_data;
+  afi_frames_t *file_data; 
 
 } afi_audio_pixels_t;
 
