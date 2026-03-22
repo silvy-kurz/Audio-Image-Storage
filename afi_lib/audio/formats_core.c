@@ -6,10 +6,10 @@ typedef enum afi_audio_format_e {
 // RIFF SPECIFIC 
 
 typedef enum afi_chunk_type_e {
-  AFI_MASTER_RIFF,
-  AFI_FORMAT,
-  AFI_DATA,  
-  AFI_EXTRA
+  AFI_CHUNK_MASTER,
+  AFI_CHUNK_FORMAT,
+  AFI_CHUNK_DATA,  
+  AFI_CHUNK_EXTRA
 } afi_chunk_type_t;
 
 typedef struct afi_riff_chunk_s {

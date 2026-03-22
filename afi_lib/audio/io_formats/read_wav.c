@@ -31,13 +31,13 @@ afi_result_t get_chunk_count(FILE *file, u32 total_file_size, int *count_out) {
 
 afi_chunk_type_t get_chunk_type(char *chunk_id) {
     if (memcmp(chunk_id, "RIFF", 4) == 0) {
-        return AFI_MASTER_RIFF;
+        return AFI_CHUNK_MASTER;
     } else if (memcmp(chunk_id, "fmt ", 4) == 0) {
-        return AFI_FORMAT;
+        return AFI_CHUNK_FORMAT;
     } else if (memcmp(chunk_id, "data", 4) == 0) {
-        return AFI_DATA;
+        return AFI_CHUNK_DATA;
     } else {
-        return AFI_EXTRA;
+        return AFI_CHUNK_EXTRA;
     }
 }
 
@@ -65,7 +65,7 @@ afi_result_t load_file_chunks(FILE *file, int chunk_count, afi_chunk_container_t
 
   for (chunk_index = 1; chunk_index < chunk_count; chunk_index++) {
     if (fread(chunk_data, 1, chunk_data_size, file) < chunk_data_size) {
-      printf("Chunk Read Failed\n");
+      printf("Chunk Header Read Failed\n");
       return AFI_FILE_OPEN_FAILED;
     }
 
@@ -78,7 +78,7 @@ afi_result_t load_file_chunks(FILE *file, int chunk_count, afi_chunk_container_t
     chunk_buffer[chunk_index].data = malloc(chunk_size);
 
     if (fread(chunk_buffer[chunk_index].data, 1, chunk_size, file) < chunk_size) {
-      printf("Chunk Read Failed\n");
+      printf("Chunk Data Read Failed\n");
       return AFI_FILE_OPEN_FAILED;
     }
   }
