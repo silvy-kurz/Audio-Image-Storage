@@ -16,7 +16,7 @@ It doesn’t just hide data — it **restructures it visually**, mapping raw byt
 - 🧩 **Extensible design** — built to support *any* file type
 - ⚙️ **C core + Python wrapper** — performance + usability
 - 🧪 **Experimental / novelty project** — explore data in a completely new way
-
+- ⚠️ Robust error handling via explicit C error codes (no silent failures)
 ---
 
 ## ℹ️ Overview
@@ -25,7 +25,7 @@ AFI (originally *Audio-File-Image*, now evolving toward *Any-File-Image*) is an 
 
 Instead of treating images as mere containers (like traditional steganography), AFI treats them as a **structured encoding space**:
 - Every byte of the original file is mapped intentionally to pixel data
-- The mapping aims to **maximize visible patterns**, not randomness
+- The mapping aims to **maximize visible patterns** whenever possible 
 - File metadata is embedded in a recoverable format at the start of the image
 
 The result is something in between:
@@ -34,15 +34,30 @@ The result is something in between:
 - 🧠 a visualization of raw data  
 
 ---
+## 📦 AFVF Format (Internal Representation)
 
-### 🤔 Why?
+AFI converts files into an intermediate binary format before mapping them to image pixels.
 
-Most data-into-image techniques fall into one of two categories:
-- **Steganography** → hide data invisibly  
-- **Naive encoding** → dump bytes into pixels without structure  
+This format — **AFVF (AFI Visual Format)** — is designed for:
+- 🔁 **Perfect reconstruction**
+- 🧩 **Structured metadata storage**
+- 🎞️ **Support for multi-frame / multi-section data**
 
-AFI explores a third direction:
-> *What if the image itself reflects the structure of the data — while still being perfectly reversible?*
+At a high level, AFVF separates:
+- metadata (file info, structure)
+- frame data (the actual encoded content)
+
+This allows AFI to reconstruct the original file *exactly*, while still enabling flexible encoding strategies.
+
+
+
+---
+###  Why?
+
+Most existing data-into-image techniques are either completely visually incomprehensible, or lossy. For example, converting audios to images usually involves breaking down the audio using a Short-Fast-Fourier-Transform, and mapping the resultant complex numbers to Pixels. This process, when reconstructed into audio, creates sounds that are audibly identical, but on a byte level completely different. Alternatively, programs in cryptography will dump bytes into pixels without structure. 
+
+AFI takes an approach somewhere in the middle:
+> *Pixel Mappings with byte level accuracy, that reflect the structure of the data*
 
 This makes it interesting for:
 - 🎧 audio engineers (visualizing waveform structure differently)
