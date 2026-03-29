@@ -1,11 +1,10 @@
-#include <stdbool.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdint.h>
-#include <stdlib.h>
+#include <inttypes.h>
 #include <math.h>
-#include <inttypes.h> 
-
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 typedef int8_t i8;
 typedef int16_t i16;
@@ -20,7 +19,8 @@ typedef uint64_t u64;
 
 typedef float f32;
 
-typedef enum afi_result_e{
+typedef enum afi_result_e
+{
   AFI_SUCCESS,
   AFI_FILE_OPEN_FAILED,
   AFI_FILE_FORMAT_WRONG,
@@ -29,4 +29,3 @@ typedef enum afi_result_e{
   AFI_UNKNOWN_ERROR,
   AFI_MALLOC_FAILED,
 } afi_result_t;
-
