@@ -1,6 +1,6 @@
 # 📦 AFI — File ↔ Image Preservation
 
-> *Encode files into images. Not approximately — **perfectly**.*
+> *Encode Files into Images, with Byte Level Perfect Reconstruction*
 
 AFI is a low-level C library (with a Python interface) for converting files into images and back again with **byte-perfect reconstruction**.  
 It doesn’t just hide data — it **restructures it visually**, mapping raw bytes into pixels in a way that preserves information while maximizing human-recognizable structure.
